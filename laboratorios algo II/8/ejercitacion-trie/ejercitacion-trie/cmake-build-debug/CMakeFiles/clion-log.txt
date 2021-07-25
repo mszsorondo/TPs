@@ -1,0 +1,4 @@
+/snap/clion/137/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -G "CodeBlocks - Unix Makefiles" "/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug

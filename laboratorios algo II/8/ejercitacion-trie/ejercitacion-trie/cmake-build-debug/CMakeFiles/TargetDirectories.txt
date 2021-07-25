@@ -1,0 +1,7 @@
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/correrValgrind.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/gtest.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/correrTests.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/gtest_main.dir
+/home/msorondo/Desktop/formateo ubuntu 12-1120/Algo II/laboratorios/8/ejercitacion-trie/ejercitacion-trie/cmake-build-debug/CMakeFiles/correrTests_ext.dir

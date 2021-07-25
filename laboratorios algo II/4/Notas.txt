@@ -1,0 +1,96 @@
+Arreglos estáticos, notación:
+int arregloEstatico[n] = ...
+donde n=long del arreglo (no puede cambiar)
+
+Memoria dinámica, Motivación: queremos crear nuestra propia versión de la clase vector. 
+métodos y variables públicas()
+
+¿Cómo hago la representación interna del vector?(Notese que necesitaría poder indexar, pushear y popear asique el arreglo estatico no me sirve)
+Para hacerla debo comprender cómo funciona el modelo de memoria en C++
+
+Las variables en memoria SEGUN INTUYO (el profesor este explica muy mal), almacenan la informacion en direcciones con capacidad de 4 bits  donde representan lo que tengan que representar. 
+
+
+Ademas de los tipos basicos de datos que ya conocemos, exiten los punteros
+Los punteros apuntan a una direccion de memoria donde presumiblemente hay almacenado un dato de tipo T. 
+Por ejemplo:
+
+
+Punteros a variables locales
+int main() {
+	int x = 10;
+	int* px = &x;// obtengo la direccion de x
+	cout << px << endl;// la direccion que apunta a x
+	cout << *px << endl;//el valor de x (10)
+	*px = *px + 1;
+	cout << x << endl;// ahora vale 11
+	int* q = &7;//>co.cpp:10:13: error: lvalue required as unary '&' operandint* q = &7;
+}
+
+- Punteros a estructuras -
+struct Par{
+	int x;
+	char y;
+
+}
+	
+int main(){
+	Par pares[2]; //arreglo de pares
+	Par* p = &pares[1]; //puntero al segundo par
+	(*p).x = 10; // el valor en el puntero p será 10
+	p->y = 'b'; //usando el puntero al segundo par, defino su variable y. Esta notacion se puede usar intercambiablemente con la de la fila anterior
+	cout << p->x <<endl;//10
+	char* q = &p->y; //q apunta a la variable y del segundo par
+	*q = 'c';//cambio el valor al que apunta el puntero q
+	cout<< pares[1].y << endl;// 'c'
+}
+
+para declarar un puntero se usa un asterisco luego de declarar el tipo de la variable
+
+- Null pointer -
+
+La keyword Null
+Antes, Null solía utilizarse para indicar que un puntero usa la direccion 0. A partir de C++11 se reemplazó Null por nullptr para este tipo de usos porque le da un mayor significado semántico que se trata de una direccion de un puntero.
+
+- Regiones de memoria -
+
+La memoria en C++ se divide en tres tipos de regiones: 
+Global (Estática) -> en el ejecutable. La memoria estática se encuentra incrustada en el ejecutable .
+Local (Automática) -> en la pila. La memoria en la pila se administra automáticamente. 
+Dinámica -> En el heap. La memoria en el heap se administra manualmente. 
+
+Las variables estáticas existen durante todo el programa:
+
+int x = 42;
+
+int main(){
+int* p = &x;
+cout<<*p<<endl;
+}
+
+La memoria en la pila se administra automáticamente 
+
+En c++ las variables locales y los parámetros se almacenan en  la pila. El tiempo de vida de una variable está dado por su scope. 
+>Al declarar una variable local, se apila su valor. 
+>Cuando el socpe de la variable finaliza, se desapila automáticamente su valor. 
+Osea que no puedo llamar a variables fuera de su scope. 
+
+La memoria en el heap se administra manualmente 
+C++ provee dos operaciones para administrar la memoria dinámica:
+> new T - reserva espacio en el heap para almacenar un valor de tipo T: devuelve un puntero de tipo T* 
+> delete p - libera la memoria asociada al puntero p
+
+Tambi ́en se pueden reservar arreglos de tama ̃nodin ́amico, cuyotama ̃no se elige en tiempo de ejecuci ́on:
+> new T[n]: reserva espacio en el heap para almacenar contiguamente n valores de tipo T. Devuelve un puntero de tipo T* a la direcci ́on de memoria donde comienza ese espacio.
+> delete[] p libera la memoria asociada al arreglo queempieza en la direcci ́on p.
+
+
+Implementacion de vector 
+
+Leaking: cuando no libero la memoria de un puntero.	
+
+Cuando termina de ejecutarse un scope, el espacio que almacenaba variables en la pila se libera de forma automática. ¿Qué pasa si tenía variables definidas en el heap dentro de dicho scope?
+
+Para que no haya leakage al usar una clase en un scope reducido, debo crear un método destructor que se ejecute siempre al terminar el scope. 
+
+Pasaje de parámetros por referencia

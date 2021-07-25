@@ -1,0 +1,26 @@
+Qué pasa cuando compilo:
+	1. Preprocesamiento (el preprocesador sólo trabaja con texto). El preprocesador es instruído por el uso del símbolo numeral #... #include, #ifdef. #define y todas éstas instrucciones son dadas al preprocesador y le indican cómo posicionar el código.
+
+*Funcionalidad del #include "archivo.cpp" es LITERALMENTE copiar y pegar código del archivo. De hecho se trata de una instruccion del preprocesador. 
+ 
+El uso de "<>" es sutilmente distinto.
+
+*Esquema de compilación
+	Declarar algo todavía no definido es útil para poder escribir primero la función de mayor nivel y luego las auxiliares, porque le dicen al compilador que van a ser definidas más abajo.
+	Problema común: incluir un archivo A y otro B en un MAIN, pero que a su vez A esté incluido en B hace que A se incluya dos veces dentro de main y por lo tanto haya una DOBLE DEFINICION, lo cuál resulta en un ERROR. 
+	Pero si quiero usar código de a en b y a su vez utilizar a y b en main? SOLUCIÓN: Usar un archivo.h con todas las declaraciones.
+
+TESTING
+Recuerdo: Sólo prueba la presencia de errores, no su ausencia. 
+Formas de testing:
+	1. A ojo (no es nada eficiente, no recomendado)
+	2. Hacer funciones (usualmente booleanas) que testeeen (como si fueran mas funciones del programa).
+	3. Usar un framework de testing (lo + simple y + rápido).
+	Ejemplo: gtest
+	Ideas al testear: 
+			- Mínimo 1 test/función.
+			- Usar tests por comportamiento específico
+			- Al testear colecciones pensar en los casos vacío, 1 elem, muchos elem, etc
+			- Casos borde
+
+Paquete LaTeX Algo II: Básicamente se trata de ver el template y de ver que tal se ve-

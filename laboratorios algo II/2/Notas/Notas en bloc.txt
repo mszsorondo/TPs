@@ -1,0 +1,246 @@
+------- Labo 1: Construcción de clases en C++-------
+1. Tecnicismos
+
+	-Declaración(asignar un tipo a un nombre, se pueden repetir) != definición (asignar un valor al nombre declarado, no se pueden repetir). Una excepción: los valores básicos(int, ?) son definidos automáticamente al declararse incluso si la definición no fue dada por el programador. Para evitar esto se debe anteponer la sentencia "extern".
+
+	-Scope: El alcance de una declaración (dónde vale). Se delimitan con llaves {...}. Los scopes con nombre se pueden acceder mediante :: 
+		
+		--------Declaración y acceso de un "namespace":---------
+
+namespace elNombreQueQuieras{
+	int n1 = 1;
+	bool resp = false;
+}
+//Acá fuera no puedo acceder asi nomas a las variables elNombreQueQuieras, para ello...
+int suma = 2 + elNombreQueQuieras::n1; //acceso al scope
+bool booleano = elNombreQueQuieras::resp || true;
+
+		---------------------------------------------------------
+NOTA IMPORTANTE: puedo hacer un scope solo con llaves sin antecederlo con ningun tipo, nada declarado en su interior sera reutilizable fuera.
+
+
+
+2. Módulos y clases
+	- Idea: dar solución a un problema genérico y poder reutilizarla sin la necesidad de saber cómo funciona dentro (interfaz).
+
+	- Ejemplo: Modelar una partida de truco.
+		OBS: TAD no es una partida de truco, sino una spec universal para todas las posibles partidas (en C++: instancias) de truco.
+			Class Truco; //es la abstracción
+			Truco t1;
+			Truco t2; //son dos instancias
+	- Concepto de "representación interna": El conjunto de variables (y su estado) de una instancia. Sobre estas variables se ejecuta el código en el tiempo... ¿Cómo decidir la representación interna y escribirla en código? -> Lo veremos en el labo.
+		       ¿Cómo definir el comportamiento SIN la representación interna? -> Lo veremos en la práctica.
+Ejemplifiquemos la definición de una clase con un cacho de código:
+
+class Truco{
+	public: //significa que puedo acceder desde fuera de la clase
+		uint puntaje_j1(); //uint son los naturales
+		uint puntaje_j2(); 
+		
+		Truco();
+		void sumar_punto(uint);
+		bool buenas(uint);
+		
+
+	private: //lo que sólo se puede usar dentro de la definición de la clase
+		int puntaje_j1_; //convención: las variables de la representación interna se escriben con un guión bajo al final
+		int puntaje_j2_;
+} 
+
+	- ¿Cómo defino el comportamiento de una clase?
+void sumarPunto::Truco(uint j){
+	if(j == 1)
+		this -> puntaje_j1_++;
+	else
+		this -> puntaje_j2_++;
+}
+		"this" hace referencia a la instancia en cuestión (como el self de python) y además USA FLECHITA porque es un "puntero".
+		AVISO: this se puede obviar en el contexto anterior (en caso de que haya una variable externa con el mismo nombre, su valor es "pisado" por el valor de la variable interna pues estamos en su scope).
+		DEF("método"): Función asociada a una clase.
+
+		PREGUNTA: ¿Por que definimos variables privadas que tienen el puntaje y tambien métodos públicos que devuelven el mismo valor?
+		
+		RESPUESTA: Porque los métodos públicos me permiten ver el puntaje y si las variables de puntaje fueran publicas entonces podríamos cambiar los puntajes sin la sintaxis .sumarPunto(1); podríamos decir por fuera de la clase que t1.puntaje_j1_ = 7; de la nada (x ejem).
+	
+			Por lo tanto, definimos los métodos para ver los puntajes:
+			uint Truco::puntaje_j1(uint j){
+				return this->puntaje_j1_;
+			}
+			uint Truco::puntaje_j2(uint j){
+				return puntaje_j2_;//puedo obviar el this pues estoy en el scope de la clase Truco
+			}
+			
+			bool Truco::buenas(uint j){
+				if(j==1)
+					return this->puntaje_j1_ > 15;
+				else
+					return puntaje_j2_ > 15; //insisto: se puede obviar el this
+			}
+		
+	- Constructor: Funciones especiales que se hacen para inicializar la nueva instancia de un tipo. 	
+
+		Truco::Truco() : puntaje_j1_(0), puntaje_j2_(0){
+		}
+		OBS: Si o si se escriben con el nombre de la clase y no devuelven nada. SIEMPRE se llaman al crear una instancia.
+		FORMAS de llamar a un constructor:
+		int main() {
+			Truco t = Truco();
+			Truco t2;
+			Truco t3();
+		}	
+
+	TODO JUNTO...
+class Truco(){
+	public:
+		uint puntaje_j1();
+		uint puntaje_j2()
+		Truco();//Llamada al constructor
+		
+		bool buenas(uint j);
+		void sumarPunto(uint j);
+	private:
+		uint puntaje_j1_;
+		uint puntaje_j2_;
+}
+uint Truco::puntaje_j1(){
+	return this->puntaje_j1_;
+}
+uint Truco::puntaje_j2(){
+	return this->puntaje_j2_;
+}
+Truco::Truco() : puntaje_j1_(0), puntaje_j2_(0){
+}
+bool Truco::buenas(uint j){
+	if(j==1)
+		return puntaje_j1_ > 15;
+	else
+		return this->puntaje_j2_ >15; // UNA VEZ MAS JAJAJA: Se puede obviar el this pues estamos definiendo en el scope de la clase.
+}
+void Truco::sumarPunto(uint j){
+	if(j==1)
+		puntaje_j1_++;
+	else
+		puntaje_j2_++;
+}
+
+ 	
+---------------------------------------------------------------------
+Modelar una libreta universitaria
+(Por mi...)
+class Libreta(){
+	public:
+		string LU();
+		Libreta();
+		set<string> practicosAp();
+		set<string> finalesAp();
+		uint notaDelFinal(string materia);
+		
+		void aproboPracticos?(pair<string,bool>);
+		void notaFinal(pair<string,uint>);
+
+	
+	private:
+		string LU_;
+		map<string,int>	notas;	
+		
+};
+
+(La solución de la cátedra...)
+//empieza usando renombres (equivalente a TAD ES)
+
+using LU = string;
+using Materia = string;
+using Nota = uint;
+
+class Libreta(){
+	public:
+		LU lu();
+		set<Materia> practicosAprobados();
+		set<Materia> finalesAprobados();
+		Nota nota_final(Materia m);
+
+		Libreta(LU);
+		void aprobarPractico(Materia m);
+		void aprobarFinal(Materia m, Nota nota);
+
+	private:
+		LU lu_;
+		set<Materia>practicos_;
+		map<Materia, Nota>finales_;
+
+}; //PUNTO Y COMA AL FINAL DE UNA CLASE SIEMPRE!!!!
+	
+//Diferencias principales: 
+		. Uso de renombres
+		. Declara el constructor en otro orden
+		. guarda el nombre de los prácticos en una variable interna (es imprescindible y yo no lo hice)
+		. usa mejor sintáxis
+		. El constructor recibe como argumento la libreta!!! (tambien imprescindible y yo no lo hice)
+Algoritmos: 
+
+LU Libreta:: lu(){
+	return lu_;
+}
+set<Materia> Libreta::practicosAprobados(){
+	return this->practicos_;
+} 
+set<Materia> Libreta::finalesAprobados(){
+	set<Materia> res;
+	for(pair<Materia,Nota> mater : this->finales_){
+		res.insert(mater.first);		
+	}
+	return res;
+	
+}
+
+
+Libreta::Libreta(LU lu) : lu_(lu), practicos_(), finales_(){}
+
+
+
+Nota Libreta::nota_final(Materia m){
+	return this->finales_[m].second;
+}
+
+void Libreta::aprobarPractico(Materia m){
+	this->practicos_.insert(m);
+}
+void Libreta::aprobarFinal(Materia m, Nota nota){
+	practicos_.insert(m);
+	finales_.insert(make_pair(m,nota))
+
+}
+
+VEASE  que en la definicion del constructor se inicializan las variables PRIVADAS y CON PARENTESIS. Esta notación se debe a que también estamos incializando los métodos constructores de las variables privadas. 
+practicos_() es llamar al constructor set<Materia> s();//conjunto vacío
+
+--------------------------------Operadores--------------------------------------
+
+
+Queremos poder operar con nuestras clases con símbolos (+, *, -, **, <<, etc) sin hacerlo con la notación de funciones. 
+Solución: Sobrecarga de operadores.
+
+Ejemplo 1: Quiero imprimir en pantalla una partida de truco con el operador <<. Este operador en particular sólo puede ser definido fuera de la clase. 
+include <ostream>
+ostream& operator<<(ostream& os, Truco t){
+	
+	os << "J1: " << t.puntaje_j1() << ", J2: " << t.puntaje_j2();
+	return os;
+
+}
+
+Ejemplo 2: Quiero definir la igualdad entre partidas de Truco. Este operador puede ser definido por fuera.
+
+bool Truco::operator==(Truco o){
+	return(this->puntaje_j1_ == o.puntaje_j1() and
+	       this->puntaje_j2_() == o.puntaje_j2());
+
+}
+
+
+
+
+
+
+
+

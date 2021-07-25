@@ -1,0 +1,23 @@
+Sobre constructores y listas de inicializacion:
+Entonces el constructor por copia sirve para poder copiar instancias anteriores de la clase ya inicializadas y el operador de igualdad tambien?
+El constructor por copia puede 
+
+
+NO ES LO MISMO:
+nombreClase a;//defecto
+a.valor  = 1;
+nombreClase b = a;//copia
+QUE:
+nombreClase a;//defecto
+a.valor = 1;
+nombreClase b;//defectp
+b=a;//asignacion
+
+Moraleja: SI mi clase tiene referencias, tengo que declarar el constructor por copia y el de asignacion.
+
+BASICAMENTE ENTENDI MUY POCO DE LISTAS DE INICIALIZACION PORQUE ESTA MAL EXPLICADO, ayudaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+
+

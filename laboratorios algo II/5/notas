@@ -1,0 +1,82 @@
+Motivacion: Nos gustar'ia ahorrarnos la complejidad O(n) de insertar un elemento que tenemos en un array redimensionble o vector para una estructura lineal. 
+
+En un vector, cada elemento se almacena en un espacio de memoria contiguo al elemento anterior y/o siguiente. 
+Para cumplir con nuestro objetivo vamos entonces a usar el 'nodo'. Un nodo posee un valor y un pointer que apunta al espacio en donde se encuentra el siguiente elemento.
+Ejemplo: una 'lista enlazada' [1,6,2,3] Trata de 4 nodos en donde el primer nodo almacena el valor 1 y est'a asociado al pointer que almacena la direccion del segundo nodo, con valor 6 y que esta asociado al pointer que almacena la direccion del siguiente nodo y as'i sucesivamente.
+
+Node ser'a la primera estructura recursiva que veremos...
+#include <iostream>
+#include <cstdlib>
+using namespace std
+class Node{
+	
+  public:
+	Node* next;//puntero a nodo
+	int data;//valor del nodo
+
+}
+
+Queremos encapsular este comportamiento en un TAD que se comporte como std::list<T>
+
+class LinkedList
+{
+ public:
+	int length;
+	Node* head;//el puntero al primer nodo
+	
+	LinkedList();
+	~LinkedList();
+	
+	void add(int data);
+	void print();
+
+
+}
+
+LinkedList::LinkedList():length(0),head(NULL){}
+
+void LinkedList::add(int data){
+	Node* actual = new Node();//reservo espacio en el HEAP para el nuevo nod
+	actual->data = data;//asigno el valor del nodo	
+
+	actual->next = this->head;//El nodo que sigue al que estamos agregando es el que se agreg'o antes
+	this->head = actual;
+	this->length++;
+	
+}
+
+//Destructor:
+LinkedList::~LInkedList(){
+	Node<T>* temp = head->next;//Creo un puntero a nodo temp cuya 'head' sea un puntero al proximo modo  
+	while(temp != NULL)//mientras el puntero a next no sea el puntero nulo (cuando lo sea sera porque llegamos al final de la lista)
+	{ temp = temp -> next;//el puntero temp pasar'a a apuntar al siguiente nodo
+	  delete(head);//recordemos liberar la memoria  del puntero anterior
+	  head = temp;//luego de haber liberado el espacio del puntero anterior la variable head ser'a el nodo temporal
+	}
+}
+Otro destructor (usa una funci'on privada)
+Lista::Lista(){
+	_primero = NULL;
+}
+Lista::~Lista(){
+	_destruir();
+}
+void Lista::_destruir(){
+	while(_primero!=NULL){
+		sacarPrimero();
+	}
+
+}
+
+void Lista::sacarPrimero(){
+	Nodo*p = _primero;
+	_primero = primero-> siguiente;
+
+	delete p;
+}
+
+
+
+
+
+

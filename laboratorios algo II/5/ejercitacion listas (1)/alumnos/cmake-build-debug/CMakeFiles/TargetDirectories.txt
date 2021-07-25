@@ -1,0 +1,6 @@
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/gtest.dir
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/correrTests.dir
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/gtest_main.dir
+/home/msorondo/Desktop/Finales/laboratorios algo II/5/ejercitacion listas (1)/alumnos/cmake-build-debug/CMakeFiles/correrValgrind.dir

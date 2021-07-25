@@ -1,0 +1,40 @@
+----------------------------------------------------------------------
+Constness:
+si uso const en la definición entonces no puedo cambiar el valor de la variable
+
+Casos "tricky":
+A. pasar una variable comun a una referencia const
+int main(){
+	int x = 5;
+	const int& y = x; //y apunta a x
+	x++;
+	cout<<y; //devuelve 6
+	//PERO...
+	y++; //tira ERROR
+}
+
+B. pasar una variable const a una común que refiere a la const:
+int main(){
+	const int x = 5;
+	int& y = x ; //tira ERROR
+		     //moraleja: no puedo referir una variable int a una variable const, pero sí puedo referir una variable const a una de tipo int. 
+}
+
+Leccion: Si quiero pasar por referencia una variable y no quiero que la función la modifique debo definirla con const...
+int max(const list<int>& l){
+	int m = 0;
+	for(int x : l){
+		if x>m
+			m=x;
+	}
+	return m;
+}
+
+CONST en funciones de clases:
+EN EL CONTEXTO DE UNA CLASE, si yo la defino y en alguna de sus funciones uso la notación:
+
+declaracion<tipo> nombreFuncion(parámetros) const{
+	...
+}
+
+lo que ésto hace es CONVERTIR AL OBJETO EN CONSTANTE. Osea que todas sus variables privadas serán inmutables

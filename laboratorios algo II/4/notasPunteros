@@ -1,0 +1,167 @@
+Pointers:
+Un pointer es un tipo de dato que almacena una direccion a un tipo de dato...
+Se los denota escribiendo el tipo de dato del que almacena la direccion seguido de un asterisco y luego su nombre:
+
+int* ptr; //declara el tipo de dato pointer a entero... Almacenara una direccion// a un entero
+
+Para obtener la direccion de una variable debo escribir un '&' seguido del nombre de la variable de la que quiero obtener la direccion
+
+Vamos con un ejemplo:
+
+int numero = 1;
+int* dirANumero = &numero;
+
+// De este modo 'dirANumero' es una variable de tipo puntero a entero. 
+// si quiero obtener el valor del entero almacenado en la direccion que almacena el pointer debo escribir su nombre anteponiendole un asterisco...
+*dirANumero devolvera el numero
+
+Un detalle para ARRAYS:
+cuando tenemos un array arr definido, podemos usar '&arr[0]' y 'arr' intercambiablemente A LA HORA DE DEFINIR UN PUNTERO AL ARRAY. 
+
+Acceso a punteros de elementos de un array:
+int arr[4];
+int* ptr = arr;
+// entonces ahora ptr es una variable que almacena la direccion del entero que se encuentra en la primera posicion del array y ADEMAS podemos hacer esto:
+ptr[0]
+ptr[1]
+ptr[2]
+
+etc
+
+ALgo muy importante que hay que saber: Las variables puntero a su vez TAMBIEN tienen una direccion que obviamente no es la misma que la que llevan almacenada
+Las variables que almacenan direcciones a punteros (punteros a punteros) se definen del iguiente modo: int **nombreVar = &puteroAlENtero
+
+nullptr
+nullptr es la direccion del puntero nulo. Esto significa que no referencia a ninguna posicion de memoria. 
+
+REGIONES DE MEMORIA: 
+Cuando definimos vaiables y les asignamos valores, estas se pueden almacenar en 3 tipos de memoria:
+GLobal (estatica): Se encuentra almacenada en el ejecutable y sus definiciones estan definidas a lo largo de todo el programa
+Ejemplo: x se encuentra en el scope global
+
+int x = 42;
+int main() {
+int* p = &x;
+cout << *p << endl;
+}
+
+
+Local (automatica): Se administra automaticamente. Las variables que se encuentran en un scope determinado se borran al terminar este de ejecutarse. 
+Al declarar una variable local, se apila su valor. AL terminar su scope esta se desapila.
+
+Dinamica(heap): Se administra manualmente
+	|
+	|-> new T es un comando que se usa para reservar memoria en el heap. 
+	| Devuelve un valor de tipo puntero a T. 
+	|-> delete p libera la memoria asociada al puntero p.
+
+###Nota importante SOBRE NEW: podemos aprovechar para que no s'olo reserve espacio en memoria para un puntero al tipo que pretende ser sino para tambien inicializar. EJEMPLO> 
+int *p = new int;//reserva en el heap espacio para un entero y devuelve su puntero. Sin embargo no esta inicializado. 
+int *p = new int(5); //Ahora estoy aprovechando para ademas definir el valor de la variable: reservamos en memoria espacio para un entero , lo inicializamos con el valor 5  y adem'as almacenamos su puntero en p.
+
+Entonces, queriamos implementar nuestra propia clase vector.
+
+template<class T>
+class Vec<T>{
+public:
+	Vec<T>();
+	int size() const;
+	T get(int i) const;
+	void set(int i, T x);
+	void push_back(T x);
+
+private:
+	int _capacidad;
+	int _tam;
+	T* _valores;
+
+}
+
+------------------------Termina el .h, empieza el .cpp---------------------------------
+
+template<class T> Vec<T>::Vec():_capacidad(1),_tam(0),_valores(new T[1]) {}
+
+template<class T>int Vec<T>::size(){
+	return _tam; 
+}
+
+template<class T> T Vec<T>::get(int i) const{
+	return _valores[i];
+}
+
+template<class T> void Vec<T>::set(int i; T x){
+	_valores[i]=x;
+}
+
+template<class T> void Vec<T>::push_back(T x){
+	if (_tam==_capacidad){
+		T* _valoresN = new T[_capacidad*2];
+		for(int i = 0 ; i <_valores.size();i++){
+			_valoresN[i]=_valores[i];
+		}
+		_capacidad = 2 * _capacidad;
+		delete[] _valores;
+		_valores = _valoresN;
+	}
+	_valores[_tam]=x;
+	_tam++;
+}
+
+Problemas con punteros:
+1. Leaks...
+Para cada new T que utilizo para liberar espacio en memoria, debo hacer un delete T para liberar dicho espacio cuando termina de ser util la informacion dentro de esta. Para ello utilizo el comando delete.
+De lo contrario el programa pierde memoria (tiene un 'leak').
+
+2. Dangling pointers...
+Una vez que eliminamos la reserva de una direccion de memoria, no deber'iamos volver a acceder a ella. Esto se debe a que no sabemos que puede llegar a haber alli dentro.
+
+Destructores:
+Cuando el scope de una estructura finaliza, muchas veces ocurre que se ha incicializado un tipo de dato que dentro de si contiene variables definidas dentro del heap. Cuando finaliza dicho scope, siempre se llama automaticamente al metodo destructor de la clase. Dicho destructor puede ser tambien definido por el programador (nunca incicializado) para ademas explicitar mas cosas. 
+
+Notacion para definir al destructor: 
+template<class T> Vec<T>::~Vec<T>(){
+	
+}
+
+Como se puede observar, la notacion es la misma que la del constructor pero con un ~ antes del nombre de la clase. 
+
+
+Otra forma de usar punteros: referencias. 
+	Cuando usamos & en la declaracion de una variable, anticipamos que el valor de dicha variable hara referencia directa a la cual le igualamos:
+int b = 3;
+int& a = b;
+
+Ahora al modificar b, tambi'en modifico a y viceversa. 
+La utilidad de la referencia radica en que si necesito apuntar a una variable usando aliasing, no necesito usar la notacion de punteros con asterisco. 
+template<class T>
+class Vec { ...
+public:
+T& operator[](int i) ;
+};
+template<class T>
+T& Vec<T>::operator[](int i) {
+return _valores[i];
+}
+
+
+Con esto puedo ahora usar la notacion de indexacion convencional .
+
+REFERENCIAS CONST (motivacion):
+Queremos ejecutar funciones que operen con los par'ametros recibidos. Supongamos la siguiente funcion:
+SUpongamos que queremos que nos devuelva la suma entre ambos...
+int funcion(int param1, int param2){
+	return param1+param2;
+}
+Con esta notacion, estamos pasando las variables POR COPIA lo cual consume memoria y es tremendamente ineficiente. Podriamos hacer que los punteros a las variables pasadas sean los mismos que los que se utilizan dentro de la funcion...
+int funcion(int& param1, int&param2){
+	return param1+param2;
+}
+
+Asi nos hemos ahorrado las copias innecesarias PERO nada nos garantiza al primcipio que la funcion que devuelve la suma entre los dos parametros 
+no modifique los parametros. QUeremos asegurarnos de que esta funcion solo devuelve la suma y no cambia nada... para ello haremos que las referencias a las variables que pasamos sean constantes. 
+int funcion(const int& param1, const int& param2){
+	return param1+param2;
+}
+
+
+`

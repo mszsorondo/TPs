@@ -1,0 +1,135 @@
+Tamaño del problema -> Solución
+Chico		    -> Función
+Mediano		    -> TAD
+Grande		    -> TADs
+
+Módulo: Encapsulamiento de un problema en un conjunto de operaciones.
+Clase: Implementacion del módulo en un lenguaje de programación.
+Interfaz: Cómo se usa un módulo.
+El "vector" es la implementación del TAD "secuencia".
+
+TAD "secuencia" (repaso de la signatura):
+	-Observadores básicos- me permiten notar la igualdad entre dos instancias:
+		vacía?
+		prim #primer elemento
+		fin #sería como un "tail" de haskell
+	-Generadores- me permiten construir instancias.
+	 	<>
+		... #sirve para agregar al principio un elemento (primer punto) de un 
+	-Otros operadores-
+
+
+Spec del problema "pares e impares" (estilo parecido a AlgoI).
+
+Mi solución al problema: 
+
+#include <vector>
+
+using namespace std;
+
+pair<vector <int>, vector<int>> pares_e_impares(vector<int>s){
+	vector<int> pares;
+	vector<int> impares;
+	for(int i = 0; i<s.size(); i++){
+		if(s[i] % 2 == 0) pares.push_back(s[i]);
+		else impares.push_back(s[i]);
+	}
+	pair<vector<int>, vector<int>> res(pares, impares);
+	return res;
+}
+
+//Está bien :)
+
+Descripción del módulo vector (del profe)
+
+TAD "conjunto": 
+Implementación en C++: -set-
+Colección de elementos en donde no se distingue el orden ni multiplicidad. (+descripción del profe)
+
+Problema: Dadas dos secuencias, devolver su intersección.
+
+Resolución en C++ (MIA)...
+
+include <"set">
+using namespace std;
+
+vector<int> interseccion(vector<int> a, vector<int> b){
+	vector<int> res;
+	for(int i = 0; i<a.size() ; i++){
+		for(int j = 0 ; j<b.size() ; j++){
+			if(a[i] == b[j]) res.push_back(a[i]);			
+
+
+		}
+		
+	}
+	return res;	
+}
+
+RESOLUCION OFICIAL CON SETS:
+
+vector<int> interseccipn(vector<int >a , vector<int > b){
+	set<int> set_a;
+	for(int i = 0; i< a.size(); i++){
+		set_a.insert(a[i]);	
+	}
+	vector<int > res;
+	for(int i = 0; i<a.size() ; i++){
+		if(set_a.count(b[i]) == 1){
+			res.push_back(b[i]);
+		}		
+	}	
+	return res; 	
+}
+
+
+TAD "diccionario", repaso de la signatura...
+Implementación en C++: -map-
+
+#include <map>
+
+using namespace std;
+
+int main() {
+	map<char,int>
+}
+
+Definición de colección: Estructura de datos que contiene elementos (como los que vimos recien + arreglos, secuencias, conjuntos, diccionarios (todos estos son en lenguaje de especificación)).
+Recorrido de colecciones:
+	-Arreglo: tamaño y acceder al i-esimo.
+	-Secuencia: prim y fin. 
+	-Conjunto: dameUno y sinUno
+	-Diccionario: claves y obtener.
+
+En C++: Lo veremos próximamente (hint: iteradores, que están detrás de todas las colecciones).
+
+Una abstracción muy útil para iterar: "for-range"...
+#include <vector>
+#include <set>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main(){
+	vector<int> vi = {1,2,5,6,7};
+	for(int n : vi){
+		cout<< n << endl;
+	}
+	
+	set<string> s = {"Bienvenidos", "a", "algo","2"};
+	for(string x : s){
+		cout << x << endl;
+	}
+	map<int, string> m;
+	m[2] = "Hola";
+	m[1] = "mundo";
+	for(pair<int, string> p : m){
+		cout << p.first << " -> " << p.second << endl;
+	}	
+}
+
+
+Ejercitación: Preparar el ambiente de desarrollo
+
+	

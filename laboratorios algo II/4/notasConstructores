@@ -1,0 +1,14 @@
+LOS CONSTRUCTORES SON FUNCIONES ESPECIALES PARA INCIALIZAR UNA NUEVA INSTANCIA DE UN TIPO
+
+Se escriben sobre el nombre del tipo.
+
+No tienen tipo de retorno (se sobreentiende que almacenan el tipo inicializado en una memoria asignada).
+
+
+SI no se define explicitamente un constructor, el compilador le asigna valores por defecto (no se puede saber con certeza cuales son dichos valores).
+
+EL constructor por copia y el operador de igualdad tienen el mismo significado   (la misma 'semantica', pero con 'sintaxis' distintas). 
+
+pr
+
+

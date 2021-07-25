@@ -1,0 +1,2 @@
+Un struct es lo mismo que una clase pero donde todo lo que no se aclare como publico o privado es considerado publico. Son 'clases express'. Me permiten acceder a sus variables con la notacion de punto.
+PUEDEN TENER CONSTRUCTORES

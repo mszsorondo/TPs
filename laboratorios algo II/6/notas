@@ -1,0 +1,6 @@
+Templates:	
+Un template sirve para poder hacer clases de tipos genericos. Por ejemplo: si quiero definir una estructura de datos en una clase y esta estructura puede contener en sus parametros cualquier tipo de datos (ej: tupla de enteros, lista de bool, bool ,etc) debo definir un 
+
+Problema: Podemos comparar dos instancias de una misma clase pero definidas en tipos distintos(supongamos por ejemplo que estos tipos son tupla y vector)? NO, salvo que sobrecarguemos el operador de comparacion (ejemplo ==) para la clase en cuestion.
+
+recordar usar el #ifndef 
